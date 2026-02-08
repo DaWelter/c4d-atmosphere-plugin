@@ -1,0 +1,92 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{helvet}
+\usepackage{amsmath}
+\usepackage[latin1]{inputenc}
+\usepackage{epsfig,float,algorithmic,algorithm,array}
+
+
+\setlength{\headheight}{20pt}
+\setlength{\textwidth}{14cm}
+
+ \renewcommand{\familydefault}{\sfdefault}
+
+
+
+\begin{document}
+
+
+\title{Atmosphere Shader Manual}
+\author{M. Welter}
+\date{16.01.2010}
+\maketitle
+
+
+\section{Introduction}
+
+This is a plugin material to simulate light scattering in the atmosphere. It is primarily intended for views from space.
+
+More precisely, it computes single scattering. Light which enters the atmosphere is attenuated through out-scattering along its path, scattered into the viewing direction, and attenuated on its way to the camera. Light reflected from the ground is also attenuated on its way to the camera. Attenuation is computed by an analytic formula. Light inscattering along the viewing ray is computed by numerical integration.
+
+\section{Usage}
+
+You find the material in the material manager menu: File/Shader/Atmosphere. Typically the shader will be applied to a sphere representing the outer boundary of the atmosphere. A second sphere with a slightly smaller radius would serve as the planets surface. For observers close to the ground you could attach the material to an environment object for example. The ground would then be made up of a small piece of a large sphere. The shader assumes that the atmosphere is distributed around a sphere with a user defined radius and center. Therefore using it with an infinite plane as ground will not produce realistic results. Have a look at the demo scenes for details of the respective setups.
+
+\section{Parameters}
+
+\begin{figure}
+\includegraphics[width=14cm]{atmosphere_dialog.jpg}
+\end{figure}
+
+The parameters are based on a physical model for light scattering. Note that length scales, which are incorporated in some parameters, are expressed in real world kilometers. The seemingly redundant "`Radius"' and "`Radius [km]"' parameters define the relationship between 1 unit in Cinema and 1 kilometer. 
+
+It follows a brief description:
+\begin{description}
+	\item[Radius]:
+		The radius of the planet in cinemas length units. Normally you set this to the radius of the sphere object which is used for the planet surface.
+	\item[Radius[km]]:
+		The corresponding radius in real world kilometers. If you want to render the earth, leave it at 6360 km.
+	\item[km/unit]
+	\item[unit/km]:
+		Shows the scaling factors between Cinema and the shaders length scale in km.
+	\item[Center]:
+		The center of the planet in local coordinates of the objects where the material is attached. If you use it with an environment object located at the world origin, you have to set it so (0,-radius,0) like it is done in the example scene.
+	\item[Global Density]:
+		Global scaling factor for the gas/aerosol density.
+	\item[Inscatter Intensity]:
+		Scaling factor for the inscattered light. The effect is equivalent to scaling the suns emission by $x\%$ and scaling the grounds albedo by $1/x\%$. A good value for $x$ is around $1000\%$. That is because the intensity of the real-world sky is about $10$ to $20\%$ of the incomming sunlight. So to bring the brightness of the sky to pleasing values either use this factor, or increase the sun intensity or use some color mapping with high exposure. Also note that the albedo of the gound in Cinema scenes is usually much higher than in nature ($0.5$ vs $0.05$ to $0.1$). Also multiple scattering in the atmosphere is absent in the shader but can also contribute $10\%$ of the skys intensity.
+	\item[Samples]:
+		Number of samples taken for the integration of inscattered light along the viewing ray. Can be as low as 5 for views from space but should be higher for observers on the ground.
+	\item[Constituent ...]:
+		The atmosphere is composed of small particles like gas molecules and larger ones (aerosols) like dust and water drops which have different scattering characteristics. You can adjust parameters for each type here. By default the first constituent corresponds to the gas phase and the second to aerosols. (This part of the GUI will most likely change.)
+	\item[Decay Height[km]]:
+	The density of particles $\rho$ decays approximately exponentially with the altitude $h$ like $\rho=\rho_0 \exp(h/H)$, where $\rho_0$ is the density on sea level. This parameters sets the length scale $H$.
+	\item[Decay Height]:
+	Shows the decay height in Cinemas length units.
+	\item[Density]:
+	Scaling factor the the particle density.
+	\item[Scattering Factor]:
+	Defined as the probability per length for a scattering event to occur. Vector components represent the respective values for red, green and blue light. They default to standard values (at sea level) for a clear day on earth.
+	\item[Scattering Phase Function]:
+	Determines the directional distribution of scattering. Use Rayleigh for gases, and Mie for aerosols. Mie has a strong forward peak, while Rayleigh is more symmetric.
+	
+	\item[The lights tab]:
+	Normally the shader computes inscattering for all light sources. But this is often not necessary or intended. Therefore there is the include list under the lights tab. If lights are put in there the shader will only consider these.
+\end{description}
+
+\section{General Notes}
+Regarding scenes with observers on the ground:
+
+Objects in the atmosphere can cause artifacts because even with 100 samples the distance between samples is several kilometers. So comparably small objects can occlude inscatter rays sometimes, and sometimes not. This also means that the shader cannot efficiently compute light shafts - created by holes in cloudy sky for example.
+
+The best way to deal with this is to have a dedicated light source which illuminates only the object with the atmosphere shader and the ground. In this case (if you have more than just the sun light in the scene) you might want use the atmosphere shaders include list to restrict inscattering to the sun.
+
+Light sources are assumed to be infinitely far away. (Simply because the API functions don't return the distance to a light source, nor do they support sampling of area lights.)
+
+\subsection{Demo Scenes}
+\begin{description}
+	\item[ascent] shows a setup for an observer close to the ground.
+	\item[from space] shows how to set up the shader for a view from orbit.
+\end{description}
+
+
+\end{document}

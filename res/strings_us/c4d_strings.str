@@ -1,0 +1,15 @@
+// C4D-StringResource
+// Identifier	Text
+
+STRINGTABLE
+{
+	IDS_PARTICLEVOLUME		"Atmosphere";
+	
+  IDS_GROUND "Ground";
+  IDS_GROUND2 "Ground 2";
+  IDS_LOW "Low";
+  IDS_HIGH "High";
+  
+  IDS_LIGHT_POINT "Point Light";
+  IDS_LIGHT_DIRECTIONAL "Distant Light";
+}

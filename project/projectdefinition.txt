@@ -1,0 +1,23 @@
+// Configuration of a custom plugin in the @c projectdefinition.txt file
+
+// support Windows and macOS
+Platform=Win64;OSX
+
+// this is a plugin
+Type=DLL
+
+// this plugin depends on these frameworks:
+APIS=\
+  cinema.framework; \
+  misc.framework; \
+  image.framework; \
+  core.framework
+
+// Defines if the project is a classic API Cinema 4D component. It enables some additional classic API support and disables automatic style checks. Can be either true or false.
+C4D=true
+
+ModuleId=net.michaelwelter.atmosphere
+
+
+
+stylecheck.level=0

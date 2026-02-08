@@ -1,0 +1,55 @@
+STRINGTABLE Mplanetatmosphere
+{
+	Mplanetatmosphere "Atmosphere";
+
+  RADIUS_UNITS "Radius";
+  RADIUS_KM "Radius [km]";
+  
+  RADIUS_UNITS_ALTERNATIVE_NAME "Reference Size";
+  RADIUS_KM_ALTERNATIVE_NAME "Reference [km]";
+  
+  KM_PER_UNIT "km/unit";
+  UNIT_PER_KM "units/km";
+  //CENTER_UNITS "Center";
+  GLOBAL_DENSITY "Global Density";
+  MAT_PREVIEW "Preview";
+  GROUP_LIGHTINCLUSION "Included Lights";
+  MATERIAL_PAGE_LIGHT "Lights";
+  LIGHTINCLUSION "";
+  USE_OWN_SCALING "Use own length scale";
+
+  GEOMETRY_TYPE "Geometry";
+  ID_GEOMETRY_SPHERE "Sphere";
+  ID_GEOMETRY_FLAT "Flat";
+  ID_GEOMETRY_CYLINDER "Cylinder";
+
+  SCATTER_INTENSITY "Inscatter Intensity";
+  
+  INTEGRATION_STEP_SIZE "Integration Step [km]";
+  NUM_INTEGRATION_STEPS "Integration Steps";
+  //MAX_SUBSTEP_LEVELS "Subdivision Levels";
+  MAX_INTEGRATION_ERROR "Error Tolerance";
+  MAX_INTEGRATION_ERROR_FOR_GI "Error Tolerance (GI & Blurry)";
+  USE_TRACKING "Use Tracking";
+  MONTE_CARLO_HYBRID_INTEGRATION "Noisy";
+  
+  ID_PHASE_TYPE_RAYLEIGH "Rayleigh";
+  ID_PHASE_TYPE_MIE "Mie";
+  
+  GROUP_CONSTITUENT1 "Molecules";
+  ID1_ON "On";
+  ID1_DECAY_HEIGHT "Decay Height [km]";
+  ID1_DECAY_HEIGHT_UNITS "Decay Height";
+  ID1_DENSITY "Density";
+  ID1_PHASE_FACTOR "Scattering Factor [*1e-3/km]";
+  ID1_PHASE_TYPE "Scattering Phase Function";
+  
+  GROUP_CONSTITUENT2 "Aerosoles";
+  ID2_ON "On";
+  ID2_DECAY_HEIGHT "Decay Height [km]";
+  ID2_DECAY_HEIGHT_UNITS "Decay Height";
+  ID2_DENSITY "Density";
+  ID2_PHASE_FACTOR "Scattering Factor [*1e-3/km]";
+  ID2_PHASE_TYPE "Scattering Phase Function";
+  ID2_ABSORPTION_FACTOR "Absorption Factor [*1e-3/km]";
+}
